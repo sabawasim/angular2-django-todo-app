@@ -1,3 +1,60 @@
-<div class="container">
-  <h1>Home Works!</h1>
+<div class="container login-form-parent">
+  <div class="alert alert-danger" *ngIf="login_result">
+    <strong>Login Failed! </strong> Invalid Username or Password
+  </div>
+  <div class="alert alert-success" *ngIf="register_result">
+    <strong>Registered! </strong> Now you can login
+  </div>
+<div class="login-form" *ngIf="login">
+  <form>
+  <div class="avatar">
+    <img src="/assets/favicon.png" alt="todo app">
+  </div>
+  
+      <h2 class="text-center">User Login</h2>   
+      <div class="form-group">
+        <input type="text" class="form-control" name="username" placeholder="Username" #username required="required">
+      </div>
+  <div class="form-group">
+          <input type="password" class="form-control" name="password" #password placeholder="Password" required="required">
+      </div>        
+      <div class="form-group">
+          <button type="submit"  (click)="submitUser(username.value,password.value)"class="btn btn-primary btn-lg btn-block">Sign in</button>
+      </div>
+ 
+  </form>
+  <p style= "margin-left:0%" class="text-center small"> <a (click)="register()">Don't have an account? </a></p>
+</div>
+
+<div class="login-form" *ngIf="!login">
+  <form>
+  <div class="avatar">
+    <img src="/assets/favicon.png" alt="todo app">
+  </div>
+  
+      <h2 class="text-center">Register</h2>   
+      <div class="form-group">
+        <input type="text" class="form-control" name="username" placeholder="Username" #username required="required">
+      </div>
+  <div class="form-group">
+          <input type="password" class="form-control" name="password" #password placeholder="Password" required="required">
+      </div>    
+      <div class="form-group">
+        <input type="email" class="form-control" name="email" #email placeholder="Email" required="required">
+    </div>  
+    <div class="form-group">
+      <input type="text" class="form-control" name="department" #department placeholder="Department" required="required">
+  </div>   
+  <div class="form-group">
+    <input type="text" class="form-control" name="designation" #designation placeholder="Designation" required="required">
+</div>        
+      <div class="form-group">
+          <button type="submit"  (click)="registerUser(username.value,password.value,email.value,department.value,designation.value)"class="btn btn-primary btn-lg btn-block">Register</button>
+      </div>
+ 
+  </form>
+  <p style= "margin-left:0%" class="text-center small"> <a (click)="loginFunction()">Already Registered </a></p>
+</div>
+
+
 </div>

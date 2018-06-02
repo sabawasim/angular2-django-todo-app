@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { AboutComponent } from './about.component';
+import { AllTasksComponent } from './all-tasks.component';
 
 const routes: Routes = [
-  { path: '', component: AboutComponent }
+  { path: '', component: AllTasksComponent }
 ];
 
 @NgModule({
@@ -16,4 +16,4 @@ const routes: Routes = [
   ]
 })
 
-export class AboutRoutingModule { }
+export class AllTasksRoutingModule { }

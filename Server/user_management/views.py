@@ -65,8 +65,9 @@ class createUserView(APIView):
         try:
             if(fn.checkAvailbility(request)):
                 user = User.objects.create_user(username=request.data['username'],
-                                    email=request.data['email'],
-                                    password=request.data['password'])
+                                    email=request.data['email'])
+                user.set_password(request.data['password'])
+                user.save()
                 token, created = Token.objects.get_or_create(user=user)
                 designation, created_desig=Designation.objects.get_or_create(title=request.data['designation'])
                 department, created_depart=Department.objects.get_or_create(name=request.data['department'])

@@ -4,8 +4,8 @@ import { HomeComponent } from './home/home.component';
 
 
 const routes: Routes = [{
-    path: 'about',
-    loadChildren: './about/about.module#AboutModule'
+    path: 'all-tasks',
+    loadChildren: './all-tasks/all-tasks.module#AllTasksModule'
   }, {
     path: '',
     component: HomeComponent
