@@ -1,5 +1,125 @@
 <div class="container">
-  <h1>
-    About Works!
-  </h1>
+  <br>
+  <h2>
+    Hi {{login_data.username}}!
+  </h2><br>
+  <div class="alert alert-success" *ngIf="add_task_success">
+      <strong>Task Added! </strong> New Task Added Sucessfully
+    </div>
+    <div class="alert alert-danger" *ngIf="add_task_error">
+        <strong>Error! </strong> Please fill all feilds, we will reopen form
+      </div>
+      <div class="alert alert-success" *ngIf="del_task_msg">
+          <strong>Task Deleted! </strong> The Task deleted succesfully.
+        </div>
+        <div class="alert alert-success" *ngIf="edit_task_success">
+            <strong>Task Edited! </strong> The Task edited succesfully.
+          </div>
+        <div class="alert alert-danger" *ngIf="del_task_error">
+            <strong>Error! </strong> {{message}}.
+          </div>
+<div style="float:right">
+    <button (click)="addTask()" type="button" class="btn btn-primary">+ Add Task</button>
 </div>
+
+  <input type="checkbox" [checked]="my_tasks" (change)="selectTask()" /> Show only my tasks <br><br>
+  <input type="checkbox" [checked]="done_task" (change)="doneTask()" /> Show only un-completed tasks <br><br>
+  <table class="table table table-hover" *ngIf="all_tasks">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Task Name</th>
+        <th scope="col">Description</th>
+        <th scope="col">Assigned To</th>
+        <th scope="col">Status</th>
+        <th scope="col">Closed By</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let single_task of all_tasks;let i = index;">
+        <td>{{single_task.name}}</td>
+        <td>{{single_task.description}}</td>
+        <td>{{single_task.assigned_to?.username}}{{single_task?.assigned_to__username
+          }}</td>
+        <td>{{single_task.status}} <button *ngIf="single_task.status !='Done'" type="submit" class="btn btn-info btn-sm"(click)="updateTask(single_task)">Mark as Done</button></td>
+        <td>{{single_task.closed_by?.username}}{{single_task?.closed_by__username}}</td>
+        <td><button type="submit" class="btn btn-warning"(click)="editTask(single_task)">Edit</button></td>
+        <td><button type="submit" class="btn btn-danger"(click)="deleteTask(single_task.id)">Delete</button></td>
+      </tr>
+      
+    </tbody>
+  </table>
+  
+</div>
+<!-- Modal -->
+<div id="myModal" class="modal" role="dialog">
+    <div class="modal-dialog">
+  
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Add New Task</h4>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="task">Task Name</label>
+                <input type="text" placeholder="Task Name" #name class="form-control" >
+              </div>
+              <div class="form-group">
+                  <label for="task">Task Description</label>
+                  <input type="text" placeholder="Task Description" #description class="form-control" >
+              </div>
+              <div class="form-group">
+                  <label for="task">Task Status</label>
+                  <select #status class="form-control" ><option value="Not Done">Not Done</option><option value="Done">Done</option></select>
+              </div>
+              <div class="form-group">
+                  <label for="task">Task Assigned to</label>
+                  <select #assigned_to placeholder="Assigned To" class="form-control" ><option *ngFor="let user of users" [ngValue]="user">{{user.user.username}}</option></select>
+              </div>
+              <button type="submit" class="btn btn-default"(click)="sumbitNewTask(name.value,description.value,status.value,assigned_to.value)">Add New Task</button>
+        </div>
+        
+      </div>
+  
+    </div>
+  </div>
+
+
+
+<!-- Modal -->
+<div id="myModal1" class="modal" role="dialog">
+    <div class="modal-dialog">
+  
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Edit Task</h4>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="task">Task Name</label>
+                <input type="text" placeholder="Task Name" [(ngModel)] = "name1" #name2 class="form-control" >
+              </div>
+              <div class="form-group">
+                  <label for="task">Task Description</label>
+                  <input type="text" placeholder="Task Description" [(ngModel)] = "description1" #description2 class="form-control" >
+              </div>
+              <div class="form-group">
+                  <label for="task">Task Status</label>
+                  <select [(ngModel)] = "status1" #status2 class="form-control" ><option value="Not Done">Not Done</option><option value="Done">Done</option></select>
+              </div>
+              <div class="form-group">
+                  <label for="task">Task Assigned to</label>
+                  <select #assigned_to2  [(ngModel)] = "assigned_to1" placeholder="Assigned To" class="form-control" ><option *ngFor="let user of users" [ngValue]="user.user.username">{{user.user.username}}</option></select>
+              </div>
+              <button type="submit" class="btn btn-default"(click)="submitEditTask(name2.value,description2.value,status2.value,assigned_to2.value)">Edit Task</button>
+        </div>
+        
+      </div>
+  
+    </div>
+  </div>

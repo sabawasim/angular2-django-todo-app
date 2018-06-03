@@ -41,7 +41,7 @@ class loginView(APIView):
             if serializer.is_valid():
                 user = serializer.validated_data['user']
                 token, created = Token.objects.get_or_create(user=user)
-                return Response({'token': token.key,'username':user.username,'success':True},status=status.HTTP_200_OK)
+                return Response({'token': token.key,'username':user.username,'id':user.id,'success':True},status=status.HTTP_200_OK)
             else:
                 return Response({'success': False},status=status.HTTP_200_OK)
         except:

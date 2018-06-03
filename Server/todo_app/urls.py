@@ -3,6 +3,8 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns = [
+    url(r'^markdone-task/$', views.markdoneTasks.as_view(),name='markdone-task'),
+    url(r'^add-task/$', views.addTasks.as_view(),name='add-task'),
     url(r'^view-all/$', views.allTasks.as_view(),name='view-all-task'),
     url(r'^view-my-task/$', views.myTasks.as_view(),name='view-my-task'),
     url(r'^close-task/$', views.closeTasks.as_view(),name='close-task'),

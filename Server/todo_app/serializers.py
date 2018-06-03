@@ -32,5 +32,7 @@ class TaskSerializer(ModelSerializer):
         fields=['closed_by',
             'assigned_to', 
             'name', 
-            'description']
+            'description',
+            'status',
+            'id']
 

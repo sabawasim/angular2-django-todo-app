@@ -1,5 +1,6 @@
 import { Component, OnInit,OnChanges } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -8,10 +9,11 @@ import { HttpClient } from '@angular/common/http';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,private router:Router) { }
   login_result=false;
   login=true;
   register_result=false;
+
   ngOnInit() {
   }
 
@@ -33,6 +35,8 @@ loginFunction(){
           this.login_result =true;
         }
         else{
+          localStorage.setItem('login_data', JSON.stringify(res));
+          this.router.navigate(['all-tasks/'])
           this.login_result =false;
         }
 
