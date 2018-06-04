@@ -80,7 +80,7 @@ class editTasks(APIView):
                 task.name = request.data['name']
                 task.description = request.data['description']
                 task.status = request.data['status']
-                task.assigned_to = User.objects.get(username=int(request.data['assigned_to']))
+                task.assigned_to = User.objects.get(username=request.data['assigned_to'])
                 if request.data['status'] =="Done":
                     task.closed_by = request.user
                 task.save()

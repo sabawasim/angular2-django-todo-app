@@ -5,13 +5,14 @@ import { Injectable } from '@angular/core';
 import 'rxjs';
 import  'jquery'
 declare var $;
+import {CONSTANTS} from '../constants';
 @Component({
   selector: 'all-tasks',
   templateUrl: './all-tasks.component.html',
   styleUrls: ['./all-tasks.component.scss']
 })
 export class AllTasksComponent implements OnChanges {
-  constructor(private http: HttpClient,private router:Router) {
+  constructor(private http: HttpClient,private router:Router,private cons:CONSTANTS) {
     if (localStorage.getItem("login_data")==null)
     {
       this.router.navigate(['/']);
@@ -37,7 +38,7 @@ del_task_msg=false;
 del_task_error=false;
 edit_task_success=false;
 message="";
-
+assigned_val="";
 name1="";
 description1="";
 assigned_to1="";
@@ -56,7 +57,7 @@ id="";
   }
 
   deleteTask(id){
-    this.http.post('http://localhost:8000/todo_app/delete-task/',{id:id},{headers:this.header}).map(
+    this.http.post(this.cons.SERVER_URL+'/todo_app/delete-task/',{id:id},{headers:this.header}).map(
         (res) => {
             return res
         }).subscribe(res=>{
@@ -82,7 +83,7 @@ id="";
     console.log(name,description)
     if (name.trim().length>0 && description.trim().length>0){
       let data_obj={"name":name,"description":description,"status":status,"assigned_to":assigned_to};
-      this.http.post('http://localhost:8000/todo_app/add-task/',data_obj,{headers:this.header}).map(
+      this.http.post(this.cons.SERVER_URL+'/todo_app/add-task/',data_obj,{headers:this.header}).map(
         (res) => {
             return res
         }).subscribe(res=>{
@@ -112,7 +113,7 @@ id="";
 
   }
   allTasks(){
-      this.http.get('http://localhost:8000/todo_app/view-all/',{headers:this.header}).map(
+      this.http.get(this.cons.SERVER_URL+'/todo_app/view-all/',{headers:this.header}).map(
         (res) => {
             return res
         }).subscribe(res=>{
@@ -121,7 +122,7 @@ id="";
         });
   }
   allUsers(){
-    this.http.get('http://localhost:8000/user_management/view-all/',{headers:this.header}).map(
+    this.http.get(this.cons.SERVER_URL+'/user_management/view-all/',{headers:this.header}).map(
       (res) => {
           return res
       }).subscribe(res=>{
@@ -129,12 +130,15 @@ id="";
         
       });
 }
+setval(val){
+  this.assigned_val=val;
+}
 
   selectTask(){
     this.my_tasks = !this.my_tasks;
     this.done_task=false;
     if (this.my_tasks){
-      this.http.post('http://localhost:8000/todo_app/view-my-task/',{id:this.login_data.id},{headers:this.header}).map(
+      this.http.post(this.cons.SERVER_URL+'/todo_app/view-my-task/',{id:this.login_data.id},{headers:this.header}).map(
         (res) => {
             return res
         }).subscribe(res=>{
@@ -152,7 +156,7 @@ id="";
     this.done_task = !this.done_task;
     this.my_tasks=false;
     if (this.done_task){
-      this.http.post('http://localhost:8000/todo_app/hide-all-done-task/',{},{headers:this.header}).map(
+      this.http.post(this.cons.SERVER_URL+'/todo_app/hide-all-done-task/',{},{headers:this.header}).map(
         (res) => {
             return res
         }).subscribe(res=>{
@@ -185,9 +189,10 @@ id="";
 
 
   submitEditTask(name,description,status,assigned_to){
+    console.log(assigned_to)
     if (name.trim().length>0 && description.trim().length>0){
-      let data_obj={"name":name,"description":description,"status":status,"id":this.id};
-      this.http.post('http://localhost:8000/todo_app/edit-task/',data_obj,{headers:this.header}).map(
+      let data_obj={"name":name,"description":description,"status":status,"id":this.id,"assigned_to":this.assigned_val};
+      this.http.post(this.cons.SERVER_URL+'/todo_app/edit-task/',data_obj,{headers:this.header}).map(
         (res) => {
             return res
         }).subscribe(res=>{
@@ -228,7 +233,7 @@ id="";
 
   updateTask(task){
 
-    this.http.post('http://localhost:8000/todo_app/markdone-task/',{id:task.id},{headers:this.header}).map(
+    this.http.post(this.cons.SERVER_URL+'/todo_app/markdone-task/',{id:task.id},{headers:this.header}).map(
       (res) => {
           return res
       }).subscribe(res=>{
@@ -255,7 +260,7 @@ id="";
       });
   }
   logout(){
-    this.http.get('http://localhost:8000/user_management/logout/',{headers:this.header}).map(
+    this.http.get(this.cons.SERVER_URL+'/user_management/logout/',{headers:this.header}).map(
         (res) => {
             return res
         }).subscribe(res=>{
