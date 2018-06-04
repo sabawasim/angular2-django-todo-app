@@ -7,7 +7,7 @@ webpackJsonp([2,6],{
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CONSTANTS; });
 var CONSTANTS = (function () {
     function CONSTANTS() {
-        this.SERVER_URL = 'http://localhost:8080';
+        this.SERVER_URL = 'http://35.230.159.160:8080';
     }
     return CONSTANTS;
 }());
