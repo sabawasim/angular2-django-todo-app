@@ -226,7 +226,7 @@ var AllTasksComponent = (function () {
     AllTasksComponent.prototype.submitEditTask = function (name, description, status, assigned_to) {
         var _this = this;
         if (name.trim().length > 0 && description.trim().length > 0) {
-            var data_obj = { "name": name, "description": description, "status": status, "id": this.id };
+            var data_obj = { "name": name, "description": description, "status": status, "id": this.id, "assigned_to": assigned_to };
             this.http.post(this.cons.SERVER_URL + '/todo_app/edit-task/', data_obj, { headers: this.header }).map(function (res) {
                 return res;
             }).subscribe(function (res) {
