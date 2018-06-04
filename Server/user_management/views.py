@@ -71,7 +71,8 @@ class createUserView(APIView):
                 token, created = Token.objects.get_or_create(user=user)
                 designation, created_desig=Designation.objects.get_or_create(title=request.data['designation'])
                 department, created_depart=Department.objects.get_or_create(name=request.data['department'])
-                person = Person.objects.create(user=user,department=department,designation=designation,contact_no=request.data['contact_no'])
+                person = Person.objects.create(user=user,department=department,designation=designation)
+                person.save()
                 return Response({'token': token.key,'success':True,'name':user.username},status=status.HTTP_200_OK)
             else:
                 return Response({'success': False,'message':'User Already Registsered'},status=status.HTTP_200_OK)
@@ -99,7 +100,7 @@ class editUserView(APIView):
 
                 return Response({'success':True},status=status.HTTP_200_OK)
             else:
-                return Response({'success': False,'message':'User Already Registsered'},status=status.HTTP_200_OK)
+                return Response({'success': False,'message':'User Not Registered'},status=status.HTTP_200_OK)
         except Exception as e:
             print("Error {0}".format(str(e.args[0])).encode("utf-8"))
             return Response({'success': False},status=status.HTTP_400_BAD_REQUEST)

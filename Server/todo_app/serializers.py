@@ -27,6 +27,7 @@ class UserSerializer(ModelSerializer):
 class TaskSerializer(ModelSerializer):
     assigned_to=UserSerializer()
     closed_by=UserSerializer()
+    created_by=UserSerializer()
     class Meta:
         model=Task
         fields=['closed_by',
@@ -34,5 +35,6 @@ class TaskSerializer(ModelSerializer):
             'name', 
             'description',
             'status',
-            'id']
+            'id',
+            'created_by']
 

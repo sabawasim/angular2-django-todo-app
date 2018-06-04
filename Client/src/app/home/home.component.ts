@@ -13,7 +13,8 @@ export class HomeComponent implements OnInit {
   login_result=false;
   login=true;
   register_result=false;
-
+  register_result_data="";
+  register_result_data_show=false;
   ngOnInit() {
   }
 
@@ -47,9 +48,16 @@ loginFunction(){
   registerUser(user,pass,email,dept,desig){
     
     return this.http.post('http://localhost:8000/user_management/create-user/',{'username':user,'password':pass,'email':email,'department':dept,'designation':desig}).subscribe((res:any) => {
-      if (!res.success){
+      if (res.success){
         this.register_result =true;
         this.login=true;
+      }
+      else
+      {
+        this.register_result_data_show=true;
+          this.register_result_data =res['message'];
+          this.login=false;
+      
       }
 
    });

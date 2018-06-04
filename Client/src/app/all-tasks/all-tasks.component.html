@@ -18,9 +18,9 @@
         <div class="alert alert-danger" *ngIf="del_task_error">
             <strong>Error! </strong> {{message}}.
           </div>
-<div style="float:right">
-    <button (click)="addTask()" type="button" class="btn btn-primary">+ Add Task</button>
-</div>
+          <div style="float:right">    <button (click)="addTask()" type="button" class="btn btn-primary">+ Add Task</button>
+            <button (click)="logout()" type="button" class="btn btn-danger">Logout</button>
+        </div>
 
   <input type="checkbox" [checked]="my_tasks" (change)="selectTask()" /> Show only my tasks <br><br>
   <input type="checkbox" [checked]="done_task" (change)="doneTask()" /> Show only un-completed tasks <br><br>
@@ -28,6 +28,7 @@
     <thead class="thead-dark">
       <tr>
         <th scope="col">Task Name</th>
+        <th scope="col">Created By</th>
         <th scope="col">Description</th>
         <th scope="col">Assigned To</th>
         <th scope="col">Status</th>
@@ -39,6 +40,8 @@
     <tbody>
       <tr *ngFor="let single_task of all_tasks;let i = index;">
         <td>{{single_task.name}}</td>
+        <td>{{single_task.created_by?.username}}{{single_task?.created_by__username
+        }}</td>
         <td>{{single_task.description}}</td>
         <td>{{single_task.assigned_to?.username}}{{single_task?.assigned_to__username
           }}</td>

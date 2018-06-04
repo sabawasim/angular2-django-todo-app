@@ -33,7 +33,7 @@ class myTasks(APIView):
     def post(self, request, format=None):
         try:
             user=User.objects.get(id=int(request.data['id']))
-            all_task = Task.objects.filter(assigned_to=user).values('name','description','status','closed_by__username','assigned_to__username','id')
+            all_task = Task.objects.filter(assigned_to=user).values('name','description','status','closed_by__username','assigned_to__username','id','created_by__username')
             return JsonResponse({"tasks": list(all_task)})
         except:
             return Response({'sucess': False},status=status.HTTP_200_OK)
@@ -43,7 +43,7 @@ class hideMyCompletedTasks(APIView):
     def post(self, request, format=None):
         try:
             user=User.objects.get(id=int(request.data['id']))
-            all_task = Task.objects.filter(status="Not Done",assigned_to=user).values('name','description','status','closed_by__username','assigned_to__username','id')
+            all_task = Task.objects.filter(status="Not Done",assigned_to=user).values('name','description','status','closed_by__username','assigned_to__username','id','created_by__username')
             return JsonResponse({"tasks": list(all_task)})
         except:
             return Response({'sucess': False},status=status.HTTP_200_OK)
@@ -52,7 +52,7 @@ class hideAllCompletedTasks(APIView):
     permission_classes =[IsAuthenticated]    
     def post(self, request, format=None):
         try:
-            all_task = Task.objects.filter(status="Not Done").values('name','description','status','closed_by__username','assigned_to__username','id')
+            all_task = Task.objects.filter(status="Not Done").values('name','description','status','closed_by__username','assigned_to__username','id','created_by__username')
             return JsonResponse({"tasks": list(all_task)})
         except:
             return Response({'sucess': False},status=status.HTTP_200_OK)
@@ -76,7 +76,7 @@ class editTasks(APIView):
     def post(self, request, format=None):
         try:
             task=Task.objects.get(id=int(request.data['id']))
-            if task.assigned_to == request.user:
+            if task.created_by == request.user:
                 task.name = request.data['name']
                 task.description = request.data['description']
                 task.status = request.data['status']
@@ -96,7 +96,7 @@ class addTasks(APIView):
         try:
             user= User.objects.get(username=request.data['assigned_to'])
 
-            Task.objects.create(name=request.data['name'],description=request.data['description'],assigned_to=user,status=request.data['status'])
+            Task.objects.create(name=request.data['name'],description=request.data['description'],assigned_to=user,status=request.data['status'],created_by=request.user)
             return Response({"success": True})
         except:
             return Response({'sucess': False},status=status.HTTP_200_OK)
@@ -107,7 +107,7 @@ class deleteTasks(APIView):
     def post(self, request, format=None):
         try:
             task=Task.objects.get(id=int(request.data['id']))
-            if task.assigned_to == request.user:
+            if task.created_by == request.user:
                 task.delete()
                 return Response({"success": True})
             else:

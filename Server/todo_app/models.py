@@ -21,6 +21,7 @@ class Task(models.Model):
 
     closed_by = models.ForeignKey(User, null=True, blank=True, related_name="user_task")
     assigned_to= models.ForeignKey(User, null=False, blank=False, related_name="assign_task")
+    created_by= models.ForeignKey(User, null=True, blank=True, related_name="created_task")
     name = models.CharField(null=False, max_length=200)
     description = models.CharField(null=True, max_length=2000)
     status = models.CharField(max_length=20,choices=RULE_CHOICES,

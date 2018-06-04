@@ -33,16 +33,7 @@ this.login_data = JSON.parse(localStorage.getItem("login_data"))
     header:any;
   
   ngOnInit() {
-    console.log(localStorage.getItem("login_data"))
+    
   }
-  logout(){
-      this.http.get('http://localhost:8000/user_management/logout/',{headers:this.header}).map(
-          (res) => {
-              return res
-          }).subscribe(res=>{
-            
-          });
-          localStorage.removeItem("login_data");
-          this.router.navigate(['/']);
-  }
+
 }

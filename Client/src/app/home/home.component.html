@@ -5,6 +5,9 @@
   <div class="alert alert-success" *ngIf="register_result">
     <strong>Registered! </strong> Now you can login
   </div>
+  <div class="alert alert-danger" *ngIf="register_result_data_show">
+    <strong>Error! </strong>{{register_result_data}}
+  </div>
 <div class="login-form" *ngIf="login">
   <form>
   <div class="avatar">

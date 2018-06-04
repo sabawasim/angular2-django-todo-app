@@ -254,6 +254,15 @@ id="";
         
       });
   }
-
+  logout(){
+    this.http.get('http://localhost:8000/user_management/logout/',{headers:this.header}).map(
+        (res) => {
+            return res
+        }).subscribe(res=>{
+          
+        });
+        localStorage.removeItem("login_data");
+        this.router.navigate(['/']);
+}
 
 }
